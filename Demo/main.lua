@@ -1,7 +1,7 @@
 cx,cy = display.contentCenterX,display.contentCenterY
 ch,cw = display.contentHeight, display.contentWidth
 widget = require "widget"
--- requires 
+-- requires
 
 local physics = require "physics"
 physics.start()
@@ -13,14 +13,14 @@ physics.start()
 function scrollJung(self,event)
 	if self.x < -1913 then
 		self.x = 1920
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
 function scrollGround(self,event)
 	if self.x < -450 then
 		self.x = 2220
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
@@ -28,7 +28,7 @@ end
 function scrollEnemies(self,event)
 	if self.x < -200 then
 		self.x = 2100
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
@@ -38,16 +38,17 @@ function projectile(self,event)
 	if self.x > 1850 then
 		self:removeSelf()
     Runtime:removeEventListener("enterFrame", self)
-	else 
+	else
 		self.x = self.x + self.speed
 	end
 end
+
 function onCollision(event)
-  print("YEs")
+
   if event.phase == "began" then
-      
-      print(event.object1.name.." collided with "..event.object2.name)
-    
+			local o1=event.object1
+			local o2=event.object2
+      print(o1.name.." collided with "..o2.name)
   end
 end
 
@@ -70,7 +71,7 @@ jung1[i].width = 1920
 jung1[i].height = 1080
 jung1[i].x = 0 + 1920*i
 jung1[i].y = 1080
-jung1[i].speed = 1  
+jung1[i].speed = 1
 jung1[i].enterFrame = scrollJung
 Runtime:addEventListener("enterFrame", jung1[i])
 end
@@ -119,7 +120,7 @@ ground[i] = display.newImage("jground.png")
 ground[i].anchorX = 0
 ground[i].anchorY = 1
 ground[i].width = 450
-ground[i].height = 200 
+ground[i].height = 200
 ground[i].x = 0 + 450*i
 ground[i].y = 1150
 ground[i].speed = 5
@@ -131,9 +132,13 @@ char1=display.newImage("Wiz/Wizard.png")
 char1:scale(0.4,0.4)
 char1.x = cx - 0.4*cw
 char1.y = cy+cy*0.42
+physics.addBody( char1, "dynamic", {radius=20, density=5} )
+char1.gravityScale=0
+char1.name="The Good Wizard"
 --char1.speed = 2
 --char1.enterFrame = scrollEnemies
 --Runtime:addEventListener("enterFrame", char1)
+
 
 char2=display.newImage("Wiz/Wizard2.png")
 char2:scale(0.4,0.4)
@@ -143,8 +148,9 @@ char2.speed = 8
 char2.hp = 15
 char2.enterFrame = scrollEnemies
 Runtime:addEventListener("enterFrame", char2)
-physics.addBody(char2, "static", {radius = 20})
-char2.name = "Enemy Wizard 1"
+physics.addBody(char2, "dynamic", {radius = 20,density =.2})
+char2.gravityScale=0
+char2.name = "Evil Wizard 1"
 --char2.collision = onCollision
 --char2:addEventListener("collision")
 char3=display.newImage("Wiz/Wizard2.png")
@@ -154,9 +160,11 @@ char3.y = cy+cy*0.42
 char3.speed = 8
 char3.hp = 15
 char3.enterFrame = scrollEnemies
+
 Runtime:addEventListener("enterFrame", char3)
-physics.addBody(char3, "static", {radius = 20})
-char3.name = "Enemy Wizard 2"
+physics.addBody(char3, "dynamic", {radius = 20, density =.2})
+char3.gravityScale=0
+char3.name = "Evil Wizard 2"
 --char3.collision = onCollision
 --char3:addEventListener("collision")
 
@@ -165,10 +173,12 @@ function buttonHandler(event)
       fireball[n] = display.newCircle(char1.x+50,char1.y, 20)
       fireball[n]:setFillColor(1,0,0)
       fireball[n].speed = 20
-      fireball[n].name = "Fireball "..n
+			fireball[n].gravityScale=0
+      fireball[n].name = "A Fireball To The Face"
       fireball[n].enterFrame = projectile
+			fireball[n].isBullet = true
       Runtime:addEventListener("enterFrame",fireball[n])
-      physics.addBody(fireball[n], "static", {radius = 20})
+      physics.addBody(fireball[n], "dynamic", {radius = 20})
 --      fireball[n].collision = onCollision
 --      fireball[n]:addEventListener("collision")
       n=n+1
@@ -181,84 +191,12 @@ button1 = widget.newButton{
     shape = "circle",
     radius = 100,
     x = 0.90*display.contentWidth,
-    y = 0.90*display.contentHeight,    
-    fillColor = { default={1,0,0,1}, 
+    y = 0.90*display.contentHeight,
+    fillColor = { default={1,0,0,1},
       over={1,0.1,0.7,0.4} },
-    
+
     onPress = buttonHandler
-    
+
 }
 button1.alpha = 0.4
 Runtime:addEventListener("collision", onCollision)
---function touchScreen(event)
---    print("touch")
---   if event.phase == "began" then
---   	 jet.enterFrame = activateJets
---   	 Runtime:addEventListener("enterFrame", jet)
---   end
-   
---   if event.phase == "ended" then
---   	 Runtime:removeEventListener("enterFrame", jet)
---   end
-
---end
-
---function onCollision(event)
---	if event.phase == "began" then
---	  if jet.collided == false then 
---	    jet.collided = true
---	    jet.bodyType = "static"
---	    explode()
-
---	  end
---	end
---end
-	
---    city1.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city1)
-
---    city2.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city2)
-
---    city21.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city21)
-
---    city22.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city22)
-
---    city23.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city23)
-
---    city3.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city3)
-
---    city4.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city4)
-    
---    city41.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city41)
-    
---    city42.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city42)
-        
---    city43.enterFrame = scrollCity
---    Runtime:addEventListener("enterFrame", city43)
-    
---  Runtime:addEventListener("collision", onCollision)
---	Runtime:addEventListener("touch", touchScreen)
-
-
-
-
---	Runtime:removeEventListener("touch", touchScreen)
---	Runtime:removeEventListener("enterFrame", city1)
---	Runtime:removeEventListener("enterFrame", city2)
---	Runtime:removeEventListener("enterFrame", city3)
---	Runtime:removeEventListener("enterFrame", city4)
---	Runtime:removeEventListener("collision", onCollision)
-
-
-
-
-
-
