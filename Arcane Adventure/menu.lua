@@ -1,7 +1,7 @@
 local cx,cy = display.contentCenterX,display.contentCenterY
 local ch,cw = display.contentHeight, display.contentWidth
 local widget = require "widget"
--- requires 
+-- requires
 
 local composer = require "composer"
 local scene = composer.newScene()
@@ -11,7 +11,7 @@ local function spriteListener(event)
     if event.phase == "ended" then
       composer.gotoScene("game", { time = 800, effect="fade"})
     end
-  
+
 end
 
 local function gotoGame()
@@ -29,7 +29,7 @@ local menuTrack
 local function scrollBack(self,event)
 	if self.x < -955 then
 		self.x = cx+cw
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
@@ -66,10 +66,10 @@ function scene:create( event )
   local playShadow = display.newText(sceneGroup,"Play!", cx+5,cy+5, "Harry P", 150)
   playShadow:setFillColor(0)
   local playButton = display.newText(sceneGroup,"Play!", cx,cy, "Harry P", 150)
-  
+
 --  local tutorialButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44 )
-    
-  playButton:addEventListener( "tap", gotoGame)
+
+    playButton:addEventListener( "tap", gotoGame)
 --    tutorialButton:addEventListener("tap", gotoTutorial)
     menuTrack = audio.loadStream("music/castle2.mp3")
 end

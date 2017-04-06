@@ -1,7 +1,7 @@
 local cx,cy = display.contentCenterX,display.contentCenterY
 local ch,cw = display.contentHeight, display.contentWidth
 local widget = require "widget"
--- requires 
+-- requires
 
 local composer = require "composer"
 local scene = composer.newScene()
@@ -32,14 +32,14 @@ end
 local function scrollJung(self,event)
 	if self.x < -1913 then
 		self.x = 1920
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
 local function scrollGround(self,event)
 	if self.x < -450 then
 		self.x = 2220
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
@@ -47,7 +47,7 @@ end
 local function scrollEnemies(self,event)
 	if self.x < -200 then
 		self.x = 2100
-	else 
+	else
 		self.x = self.x - self.speed
 	end
 end
@@ -58,14 +58,14 @@ local function projectile(self,event)
 		self:removeSelf()
 --    self = nil
     Runtime:removeEventListener("enterFrame", self)
-	else 
+	else
 		self.x = self.x + self.speed
 	end
 end
 local function onCollision(event)
 --  print("YEs")
   if event.phase == "began" then
-    event.target:removeSelf() 
+    event.target:removeSelf()
     event.target.enterFrame = onCollision
     Runtime:removeEventListener("enterFrame", event.target)
     event.other:setFillColor(0.8,0,0)
@@ -80,7 +80,7 @@ local function onCollision(event)
       wizCount();
       b=b-1;
     end
-    
+
   end
 end
 
@@ -105,7 +105,7 @@ local function enemySpawn()
   else
     gTxt.text="All Hope Is Lost";
   end
-  
+
 end
 
 function buttonHandler(event)
@@ -113,7 +113,7 @@ function buttonHandler(event)
       audio.play(fbSound)
       fireball[n] = display.newImage("fball.png",char1.x+50,char1.y)
       fireball[n]:scale(3,3)
-      
+
       fireball[n].speed = 20
       fireball[n].hp = 5
       fireball[n].name = "Fireball "..n
@@ -123,7 +123,7 @@ function buttonHandler(event)
       physics.addBody(fireball[n], "dynamic", {radius = 20})
       fireball[n].gravityScale = 0
       fireball[n]:addEventListener("collision", onCollision)
---      fireball[n]:addEventListener("postCollision", onPostCollision) 
+--      fireball[n]:addEventListener("postCollision", onPostCollision)
       n=n+1
     end
 end
@@ -156,7 +156,7 @@ function scene:create( event )
     jung1[i].height = 1080
     jung1[i].x = 0 + 1920*i
     jung1[i].y = 1080
-    jung1[i].speed = 1  
+    jung1[i].speed = 1
     jung1[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung1[i])
   end
@@ -205,7 +205,7 @@ function scene:create( event )
     ground[i].anchorX = 0
     ground[i].anchorY = 1
     ground[i].width = 450
-    ground[i].height = 200 
+    ground[i].height = 200
     ground[i].x = 0 + 450*i
     ground[i].y = 1150
     ground[i].speed = 5
@@ -218,11 +218,11 @@ function scene:create( event )
   char1:scale(0.4,0.4)
   char1.x = cx - 0.4*cw
   char1.y = cy+cy*0.42
-  
-  
+
+
   wizBanTxt=display.newText("", cx, 50)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
-  gTxt:setFillColor(0)
+  gTxt:setFillColor(1)
 end
 
 
@@ -240,10 +240,10 @@ function scene:show( event )
       shape = "circle",
       radius = 100,
       x = 0.90*display.contentWidth,
-      y = 0.90*display.contentHeight,    
-      fillColor = { default={1,0,0,.7}, 
+      y = 0.90*display.contentHeight,
+      fillColor = { default={1,0,0,.7},
       over={1,0,0,0.2} },
-      onPress = buttonHandler    
+      onPress = buttonHandler
     }
     Runtime:addEventListener("enterFrame", game)
 	elseif ( phase == "did" ) then
@@ -285,10 +285,3 @@ scene:addEventListener( "destroy", scene )
 -- -----------------------------------------------------------------------------------
 
 return scene
-
-
-
-
-
-
-
