@@ -71,7 +71,7 @@ function scene:create( event )
     
   playButton:addEventListener( "tap", gotoGame)
 --    tutorialButton:addEventListener("tap", gotoTutorial)
-    menuTrack = audio.loadStream("music/title.mp3")
+    menuTrack = audio.loadStream("music/castle2.mp3")
 end
 
 function scene:show( event )
