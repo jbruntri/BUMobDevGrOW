@@ -10,6 +10,9 @@ local physics = require "physics"
 physics.start()
 --physics.setDrawMode("hybrid")
 
+local spellCollision = {categoryBits=1, maskBits=2}
+local darkWizardCollisions = {categoryBits=2, maskBits=5}
+local wizCollisions = {categoryBits=4, maskBits=2}
 
 local fbSound= audio.loadSound("fire.wav")
 local gameTrack
@@ -65,14 +68,22 @@ end
 local function onCollision(event)
 --  print("YEs")
   if event.phase == "began" then
-    event.target:removeSelf()
-    event.target.enterFrame = onCollision
-    Runtime:removeEventListener("enterFrame", event.target)
-    event.other:setFillColor(0.8,0,0)
-    event.other.hp = event.other.hp - 5
+    if event.target.name=="fb" then
+      event.target:removeSelf()
+      event.target.enterFrame = onCollision
+      Runtime:removeEventListener("enterFrame", event.target)
+      event.other:setFillColor(0.8,0,0)
+      event.other.hp = event.other.hp - 5
+    end
+    if event.target.name=="wiz" then
+      event.target.hp=event.target.hp - 5
+        event.other.hp = event.other.hp - 15
+    end
 --    print(event.other.hp)
     if event.other.hp <= 0 then
-
+      if event.other.name=="wiz" then
+        gTxt.text="Wiz has Died :(!\n All Hope Is Lost!"
+      end
       event.other.enterFrame = scrollEnemies
       Runtime:removeEventListener("enterFrame",event.other)
       --physics.removeBody(event.other)
@@ -86,10 +97,8 @@ end
 
 -- background
 
-
-
 local function enemySpawn()
-  if b<11 then
+  if b<20 then
     b=b+1;
     a = a+1
     char2[a]=display.newImage("Wiz/Wizard2.png")
@@ -100,28 +109,41 @@ local function enemySpawn()
     char2[a].hp = 15
     char2[a].enterFrame = scrollEnemies
     Runtime:addEventListener("enterFrame", char2[a])
-    physics.addBody(char2[a], "static", {radius = 20})
+    physics.addBody(char2[a], {radius = 20})
+    char2[a].filter = darkWizardCollisions;
+    char2[a].gravityScale=0
+    char2[a]:addEventListener("collision", onCollision)
     gTxt.text="";
-  else
-    gTxt.text="All Hope Is Lost";
   end
-
+end
+local function genChar()
+  char1=display.newImage("Wiz/Wizard.png")
+  char1:scale(0.4,0.4)
+  char1.name="wiz"
+  char1.x = cx - 0.4*cw
+  char1.y = cy+cy*0.42
+  char1.hp=30;
+  physics.addBody( char1, {radius=20} )
+  char1.isSensor=true;
+  char1.gravityScale=0
+  char1:addEventListener("collision",onCollision)
+  char1.filter=wizCollisions;
 end
 
 function buttonHandler(event)
     if event.phase == "began" then
       audio.play(fbSound)
-      fireball[n] = display.newImage("fball.png",char1.x+50,char1.y)
+      fireball[n] = display.newImage("fball.png",char1.x+70,char1.y)
       fireball[n]:scale(3,3)
-
       fireball[n].speed = 20
       fireball[n].hp = 5
-      fireball[n].name = "Fireball "..n
+      fireball[n].name = "fb"
       fireball[n].enterFrame = projectile
       Runtime:addEventListener("enterFrame",fireball[n])
 --      fireball[n].alpha = 0
-      physics.addBody(fireball[n], "dynamic", {radius = 20})
+      physics.addBody(fireball[n], {radius = 20})
       fireball[n].gravityScale = 0
+      fireball[n].filter=spellCollision
       fireball[n]:addEventListener("collision", onCollision)
 --      fireball[n]:addEventListener("postCollision", onPostCollision)
       n=n+1
@@ -159,9 +181,6 @@ function scene:create( event )
     jung1[i].speed = 1
     jung1[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung1[i])
-  end
-
-  for i = 0,1 do
     jung2[i]= display.newImage("plx-3.png")
     jung2[i].anchorX = 0
     jung2[i].anchorY = 1
@@ -172,9 +191,6 @@ function scene:create( event )
     jung2[i].speed = 2
     jung2[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung2[i])
-  end
-
-  for i = 0,1 do
     jung3[i]= display.newImage("plx-4.png")
     jung3[i].anchorX = 0
     jung3[i].anchorY = 1
@@ -185,9 +201,6 @@ function scene:create( event )
     jung3[i].speed = 3
     jung3[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung3[i])
-  end
-
-  for i = 0,1 do
     jung4[i]= display.newImage("plx-5.png")
     jung4[i].anchorX = 0
     jung4[i].anchorY = 1
@@ -213,12 +226,7 @@ function scene:create( event )
     Runtime:addEventListener("enterFrame", ground[i])
   end
 --- ADDED PLAYER ---
-
-  char1=display.newImage("Wiz/Wizard.png")
-  char1:scale(0.4,0.4)
-  char1.x = cx - 0.4*cw
-  char1.y = cy+cy*0.42
-
+  genChar();
 
   wizBanTxt=display.newText("", cx, 50)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
