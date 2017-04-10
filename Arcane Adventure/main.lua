@@ -1,4 +1,5 @@
 local composer = require ("composer")
+composer.isDebug = true
 
 display.setStatusBar( display.HiddenStatusBar )
 math.randomseed( os.time() )

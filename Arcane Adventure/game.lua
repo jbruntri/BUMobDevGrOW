@@ -101,6 +101,7 @@ local function enemySpawn()
   if b<20 then
     b=b+1;
     a = a+1
+    
     char2[a]=display.newImage("Wiz/Wizard2.png")
     char2[a]:scale(0.4,0.4)
     char2[a].x = cw+50
@@ -150,7 +151,7 @@ function buttonHandler(event)
     end
 end
 
-function game (event)
+local function game (event)
   i = i+1
   if i>15 then
     i=0
@@ -159,6 +160,12 @@ function game (event)
       enemySpawn()
     end
   end
+  if b == 1 then
+    print(wizBan.."    "..a)
+
+    composer.gotoScene("upgrades")  
+  end
+  
 end
 
 music = audio.loadStream("music/airship.mp3")
@@ -181,6 +188,8 @@ function scene:create( event )
     jung1[i].speed = 1
     jung1[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung1[i])
+  end
+  for i = 0,1 do
     jung2[i]= display.newImage("plx-3.png")
     jung2[i].anchorX = 0
     jung2[i].anchorY = 1
@@ -191,6 +200,8 @@ function scene:create( event )
     jung2[i].speed = 2
     jung2[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung2[i])
+  end
+  for i = 0,1 do
     jung3[i]= display.newImage("plx-4.png")
     jung3[i].anchorX = 0
     jung3[i].anchorY = 1
@@ -201,6 +212,8 @@ function scene:create( event )
     jung3[i].speed = 3
     jung3[i].enterFrame = scrollJung
     Runtime:addEventListener("enterFrame", jung3[i])
+  end
+  for i = 0,1 do
     jung4[i]= display.newImage("plx-5.png")
     jung4[i].anchorX = 0
     jung4[i].anchorY = 1
@@ -230,7 +243,7 @@ function scene:create( event )
 
   wizBanTxt=display.newText("", cx, 50)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
-  gTxt:setFillColor(1)
+  gTxt:setFillColor(1)  
 end
 
 
@@ -242,7 +255,7 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-    local button1 = widget.newButton{
+    button1 = widget.newButton{
       id = "spell1",
       label = "Spell 1",
       shape = "circle",
@@ -268,9 +281,37 @@ function scene:hide( event )
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
 
-	elseif ( phase == "did" ) then
+    for i = 0,1 do
+      Runtime:removeEventListener("enterFrame", jung1[i])
+      Runtime:removeEventListener("enterFrame", jung2[i])
+      Runtime:removeEventListener("enterFrame", jung3[i])
+      Runtime:removeEventListener("enterFrame", jung4[i])
+      jung1[i]:removeSelf()
+      jung2[i]:removeSelf()
+      jung3[i]:removeSelf()
+      jung4[i]:removeSelf()
+    end
+    background:removeSelf()
+    
+    for i = 0,5 do
+      Runtime:removeEventListener("enterFrame", ground[i])
+      ground[i]:removeSelf()
+    end
+      Runtime:removeEventListener("enterFrame", scrollEnemies)
+      Runtime:removeEventListener("enterFrame", game)
+    for i = wizBan+1,a do
+--      char2[i].enterFrame = scrollEnemies
+      Runtime:removeEventListener("enterFrame", char2[i])
+      char2[i]:removeSelf()
+      char1:removeSelf()
+    end
+    button1:setEnabled(false)    
+    button1:removeSelf()
+    audio.stop( 1 )
+    audio.dispose( menuTrack )
+  elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-      audio.stop( 1 )
+      
 	end
 end
 
@@ -279,7 +320,7 @@ function scene:destroy( event )
 
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-  audio.dispose( menuTrack )
+  
 end
 
 
