@@ -1,6 +1,10 @@
 local composer = require ("composer")
 composer.isDebug = true
 
+upg = 0
+damageamp = 0
+upl1 = 0
+upl2 = 0
 display.setStatusBar( display.HiddenStatusBar )
 math.randomseed( os.time() )
 audio.reserveChannels( 1 )

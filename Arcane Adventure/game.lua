@@ -73,7 +73,7 @@ local function onCollision(event)
       event.target.enterFrame = onCollision
       Runtime:removeEventListener("enterFrame", event.target)
       event.other:setFillColor(0.8,0,0)
-      event.other.hp = event.other.hp - 5
+      event.other.hp = event.other.hp - char1.damage
     end
     if event.target.name=="wiz" then
       event.target.hp=event.target.hp - 5
@@ -124,6 +124,7 @@ local function genChar()
   char1.x = cx - 0.4*cw
   char1.y = cy+cy*0.42
   char1.hp=30;
+  char1.damage = 5+damageamp
   physics.addBody( char1, {radius=20} )
   char1.isSensor=true;
   char1.gravityScale=0
@@ -160,7 +161,7 @@ local function game (event)
       enemySpawn()
     end
   end
-  if b == 1 then
+  if b == (2+upg) then
     print(wizBan.."    "..a)
 
     composer.gotoScene("upgrades")  
@@ -171,12 +172,13 @@ end
 music = audio.loadStream("music/airship.mp3")
 
 function scene:create( event )
-
-	local sceneGroup = self.view
+--  event.params.
+  composer.removeHidden()
+  local sceneGroup = self.view
   background = display.newImage("plx-1.png",cx,cy)
   background.width = 1920
   background.height = 1080
-
+  
   for i = 0,1 do
     jung1[i]= display.newImage("plx-2.png")
     jung1[i].anchorX = 0
@@ -307,6 +309,7 @@ function scene:hide( event )
     end
     button1:setEnabled(false)    
     button1:removeSelf()
+    wizBanTxt:removeSelf()
     audio.stop( 1 )
     audio.dispose( menuTrack )
   elseif ( phase == "did" ) then
