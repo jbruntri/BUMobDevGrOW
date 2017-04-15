@@ -5,6 +5,12 @@ upg = 0
 damageamp = 0
 upl1 = 0
 upl2 = 0
+upl3 = 0
+upl4 = 0
+upl5 = 0
+
+
+
 display.setStatusBar( display.HiddenStatusBar )
 math.randomseed( os.time() )
 audio.reserveChannels( 1 )

@@ -161,7 +161,7 @@ local function game (event)
       enemySpawn()
     end
   end
-  if b == (2+upg) then
+  if wizBan == (2+upg) then
     print(wizBan.."    "..a)
 
     composer.gotoScene("upgrades")  
