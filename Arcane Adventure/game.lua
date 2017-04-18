@@ -27,6 +27,9 @@ local a=0
 local b=0
 local i=0
 local wizBan=0
+local fireball={}
+local c = 0
+local n = 0
 local function wizCount()
   wizBan=wizBan+1;
   wizBanTxt.text="Wizards Banished: "..wizBan
@@ -54,8 +57,7 @@ local function scrollEnemies(self,event)
 		self.x = self.x - self.speed
 	end
 end
-local fireball={}
-local n = 0
+
 local function projectile(self,event)
 	if self.x > 1850 then
 		self:removeSelf()
@@ -69,6 +71,7 @@ local function onCollision(event)
 --  print("YEs")
   if event.phase == "began" then
     if event.target.name=="fb" then
+      c=c+1
       event.target:removeSelf()
       event.target.enterFrame = onCollision
       Runtime:removeEventListener("enterFrame", event.target)
@@ -149,6 +152,7 @@ function buttonHandler(event)
       fireball[n]:addEventListener("collision", onCollision)
 --      fireball[n]:addEventListener("postCollision", onPostCollision)
       n=n+1
+      
     end
 end
 
@@ -301,15 +305,22 @@ function scene:hide( event )
     end
       Runtime:removeEventListener("enterFrame", scrollEnemies)
       Runtime:removeEventListener("enterFrame", game)
+        for i = c,n-1 do
+      Runtime:removeEventListener("enterFrame", fireball[i])
+      fireball[i]:removeSelf()
+    end
     for i = wizBan+1,a do
 --      char2[i].enterFrame = scrollEnemies
       Runtime:removeEventListener("enterFrame", char2[i])
       char2[i]:removeSelf()
-      char1:removeSelf()
     end
+
+    
+    char1:removeSelf()
     button1:setEnabled(false)    
     button1:removeSelf()
     wizBanTxt:removeSelf()
+    audio.stop(fbSound)
     audio.stop( 1 )
     audio.dispose( menuTrack )
   elseif ( phase == "did" ) then
