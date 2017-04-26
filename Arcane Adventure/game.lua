@@ -77,11 +77,12 @@ local function onCollision(event)
       event.other:setFillColor(0.8,0,0)
       event.other.hp = event.other.hp - char1.damage
     end
+    
     if event.target.name=="wiz" then
       event.target.hp=event.target.hp - 5
         event.other.hp = event.other.hp - 15
     end
---    print(event.other.hp)
+
     if event.other.hp <= 0 then
       if event.other.name=="wiz" then
         gTxt.text="Wiz has Died :(!\n All Hope Is Lost!"
@@ -125,8 +126,8 @@ local function genChar()
   char1.name="wiz"
   char1.x = cx - 0.4*cw
   char1.y = cy+cy*0.42
-  char1.hp=30;
-  char1.damage = 5+damageamp
+  char1.hp=30 + armor;
+  char1.damage = 5+staff
   physics.addBody( char1, {radius=20} )
   char1.isSensor=true;
   char1.gravityScale=0
@@ -141,7 +142,7 @@ function buttonHandler(event)
         fireball[n] = display.newImage("fball.png",char1.x+70,char1.y)
         fireball[n]:scale(3,3)
         fireball[n].speed = 20
-        fireball[n].hp = 5
+        fireball[n].hp = 5 + staff
         fireball[n].name = "fb"
         fireball[n].enterFrame = projectile
         Runtime:addEventListener("enterFrame",fireball[n])
