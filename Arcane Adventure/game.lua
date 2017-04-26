@@ -28,7 +28,6 @@ local b=0
 local i=0
 local wizBan=0
 local fireball={}
-local c = 0
 local n = 0
 local fireballLock = false
 local function wizCount()
@@ -72,7 +71,6 @@ local function onCollision(event)
 --  print("YEs")
   if event.phase == "began" then
     if event.target.name=="fb" then
-      c=c+1
       event.target:removeSelf()
       event.target.enterFrame = onCollision
       Runtime:removeEventListener("enterFrame", event.target)
@@ -104,14 +102,14 @@ end
 local function enemySpawn()
   if b<20 then
     b=b+1;
-    a = a+1
-    
+    a=a+1
+
     char2[a]=display.newImage("Wiz/Wizard2.png")
     char2[a]:scale(0.4,0.4)
     char2[a].x = cw+50
     char2[a].y = cy+cy*0.42
-    char2[a].speed = 8
-    char2[a].hp = 15
+    char2[a].speed = 5 + floor(level/2)
+    char2[a].hp = 8 + level
     char2[a].enterFrame = scrollEnemies
     Runtime:addEventListener("enterFrame", char2[a])
     physics.addBody(char2[a], {radius = 20})
@@ -161,23 +159,26 @@ end
 
 local function game (event)
   i = i+1
+
+  if i>(15-skill) then
+    if fireballLock then
+      fireballLock=false
+    end
+
+  if( level<20 ) then
+
   if i>15 then
-    
     i=0
     spawn = math.random(0,100)
-    if fireballLock then
-      fireballLock = false
-    end
-    if spawn>70 then
+    if spawn>70-floor(level/2) then
       enemySpawn()
     end
   end
-  if wizBan == (2+upg) then
-    print(wizBan.."    "..a)
-
-    composer.gotoScene("upgrades")  
+  if wizBan > 7*level+floor(level/3) then
+    level=level+1;
+    composer.gotoScene("upgrades")
   end
-  
+
 end
 
 music = audio.loadStream("music/airship.mp3")
@@ -261,7 +262,7 @@ function scene:create( event )
 
   wizBanTxt=display.newText("", cx, 50)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
-  gTxt:setFillColor(1)  
+  gTxt:setFillColor(1)
   button1 = widget.newButton{
       id = "spell1",
       label = "A",
@@ -323,7 +324,7 @@ function scene:hide( event )
       jung4[i]:removeSelf()
     end
     background:removeSelf()
-    
+
     for i = 0,5 do
       Runtime:removeEventListener("enterFrame", ground[i])
       ground[i]:removeSelf()
@@ -332,7 +333,7 @@ function scene:hide( event )
       Runtime:removeEventListener("enterFrame", game)
         for i = c,n-1 do
 --      Runtime:removeEventListener("enterFrame", fireball[i])
-      
+
 --        fireball[i].isVisible = false
 
     end
@@ -342,9 +343,9 @@ function scene:hide( event )
       char2[i]:removeSelf()
     end
 
-    
+
     char1:removeSelf()
-    button1:setEnabled(false)    
+    button1:setEnabled(false)
     button1:removeSelf()
     wizBanTxt:removeSelf()
     audio.stop(fbSound)
@@ -352,7 +353,7 @@ function scene:hide( event )
     audio.dispose( menuTrack )
   elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-      
+
 	end
 end
 
@@ -361,7 +362,7 @@ function scene:destroy( event )
 
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-  
+
 end
 
 

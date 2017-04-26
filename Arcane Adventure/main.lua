@@ -1,8 +1,11 @@
 local composer = require ("composer")
 composer.isDebug = true
 
-upg = 0
-damageamp = 0
+level=1; -- game level variable
+armor=0; -- player armor
+staff = 0; -- player damageamp
+skill=0; -- player spell cast speed
+
 upl1 = 0
 upl2 = 0
 upl3 = 0
