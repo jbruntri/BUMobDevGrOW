@@ -76,7 +76,7 @@ function scene:show( event )
   local title = display.newText("Spell Book Upgrades", cx, 65, native.systemFontBold, 70)
   sceneGroup:insert(title)
 if upl1 == 0 then
-  local playButton1 = widget.newButton{
+  playButton1 = widget.newButton{
     id = "upgrade1_1",
     x=cx-700,
     y=cy-250,
@@ -87,12 +87,12 @@ if upl1 == 0 then
   sceneGroup:insert(playButton1)  
   playButton1.text = display.newText("Damage",playButton1.x,playButton1.y-120, native.systemFontBold, 40)
 elseif upl1 >= 1 then 
-  local playButton1 = display.newImage("ButtonPressedLock.png",cx-700,cy-250)
+  playButton1 = display.newImage("ButtonPressedLock.png",cx-700,cy-250)
   playButton1.text = display.newText("Damage",playButton1.x,playButton1.y-120, native.systemFontBold, 40)
 --    sceneGroup:insert(playButton1)
 end
  if upl1==1 then
-  local playButton1_2 = widget.newButton{
+  playButton1_2 = widget.newButton{
     id = "upgrade1_2",
     x=cx-700,
     y=cy-60,
@@ -102,11 +102,11 @@ end
   }
   sceneGroup:insert(playButton1_2)
 elseif upl1 == 0 or upl1 >1 then 
-  local playButton1_2 = display.newImage("ButtonPressedLock.png",cx-700,cy-60)
+  playButton1_2 = display.newImage("ButtonPressedLock.png",cx-700,cy-60)
 --    sceneGroup:insert(playButton1)
 end  
 if upl1==2 then
- local playButton1_3 = widget.newButton{
+ playButton1_3 = widget.newButton{
     id = "upgrade1_3",
     x=cx-700,
     y=cy+140,
@@ -116,11 +116,11 @@ if upl1==2 then
   }
   sceneGroup:insert(playButton1_3)
   elseif upl1<2 or upl1>2 then 
-  local playButton1_3 = display.newImage("ButtonPressedLock.png",cx-700,cy+140)
+  playButton1_3 = display.newImage("ButtonPressedLock.png",cx-700,cy+140)
 --    sceneGroup:insert(playButton1)
 end
 if upl1 ==3 then
-  local playButton1_4 = widget.newButton{
+  playButton1_4 = widget.newButton{
     id = "upgrade1_4",
     x=cx-700,
     y=cy+340,
@@ -130,13 +130,13 @@ if upl1 ==3 then
   }
   sceneGroup:insert(playButton1_4)
  elseif upl1 < 3 or upl1 > 3 then 
-  local playButton1_4 = display.newImage("ButtonPressedLock.png",cx-700,cy+340)
+  playButton1_4 = display.newImage("ButtonPressedLock.png",cx-700,cy+340)
 --    sceneGroup:insert(playButton1)
  end
  ----
  ----armor/HP
  if upl2 == 0 then
-  local playButton2 = widget.newButton{
+  playButton2 = widget.newButton{
     id = "upgrade2",
     x=cx-400,
     y=cy-250,
@@ -147,12 +147,12 @@ if upl1 ==3 then
   sceneGroup:insert(playButton2)
   playButton2.text = display.newText("Armor",playButton2.x,playButton2.y-120, native.systemFontBold, 40)
 elseif upl2 > 0 then 
-  local playButton2 = display.newImage("ButtonPressedLock.png",cx-400,cy-250)
+  playButton2 = display.newImage("ButtonPressedLock.png",cx-400,cy-250)
   playButton2.text = display.newText("Armor",playButton2.x,playButton2.y-120, native.systemFontBold, 40)
 --    sceneGroup:insert(playButton1)
 end
 if upl2 == 1 then
-  local playButton2_2 = widget.newButton{
+  playButton2_2 = widget.newButton{
     id = "upgrade2_2",
     x=cx-400,
     y=cy-60,
@@ -162,11 +162,11 @@ if upl2 == 1 then
   }
   sceneGroup:insert(playButton2_2)
 elseif upl2 == 0 or upl2 > 1 then 
-  local playButton2_2 = display.newImage("ButtonPressedLock.png",cx-400,cy-60)
+  playButton2_2 = display.newImage("ButtonPressedLock.png",cx-400,cy-60)
 --    sceneGroup:insert(playButton1)
 end  
 if upl2 == 2 then
-  local playButton2_3 = widget.newButton{
+  playButton2_3 = widget.newButton{
     id = "upgrade2_3",
     x=cx-400,
     y=cy+140,
@@ -176,11 +176,11 @@ if upl2 == 2 then
   }
   sceneGroup:insert(playButton2_3)
   elseif upl2 < 2 or upl2 > 2 then 
-  local playButton2_3 = display.newImage("ButtonPressedLock.png",cx-400,cy+140)
+  playButton2_3 = display.newImage("ButtonPressedLock.png",cx-400,cy+140)
 --    sceneGroup:insert(playButton1)
  end
  if upl2 == 3 then 
-  local playButton2_4 = widget.newButton{
+  playButton2_4 = widget.newButton{
     id = "upgrade2_4",
     x=cx-400,
     y=cy+340,
@@ -190,14 +190,14 @@ if upl2 == 2 then
   }
   sceneGroup:insert(playButton2_4)
   elseif upl2 < 3 or upl2 > 3 then 
-  local playButton2_4 = display.newImage("ButtonPressedLock.png",cx-400,cy+340)
+  playButton2_4 = display.newImage("ButtonPressedLock.png",cx-400,cy+340)
 --    sceneGroup:insert(playButton1)
  end
   ----
   
   ----Big Spell
   if upl3 == 0 then
-  local playButton3 = widget.newButton{
+  playButton3 = widget.newButton{
     id = "upgrade3",
     x=cx-100,
     y=cy-250,
@@ -208,12 +208,12 @@ if upl2 == 2 then
   sceneGroup:insert(playButton3)
   playButton3.text = display.newText("Big Spell",playButton3.x,playButton3.y-120, native.systemFontBold, 40)
 elseif upl3 > 0 then 
-  local playButton3 = display.newImage("ButtonPressedLock.png",cx-100,cy-250)
+  playButton3 = display.newImage("ButtonPressedLock.png",cx-100,cy-250)
   playButton3.text = display.newText("Big Spell",playButton3.x,playButton3.y-120, native.systemFontBold, 40)
 --    sceneGroup:insert(playButton1)
 end
 if upl3 == 1 then
-  local playButton3_2 = widget.newButton{
+  playButton3_2 = widget.newButton{
     id = "upgrade3_2",
     x=cx-100,
     y=cy-60,
@@ -223,11 +223,11 @@ if upl3 == 1 then
   }
   sceneGroup:insert(playButton3_2)
 elseif upl3 == 0 or upl3 > 1 then 
-  local playButton3_2 = display.newImage("ButtonPressedLock.png",cx-100,cy-60)
+  playButton3_2 = display.newImage("ButtonPressedLock.png",cx-100,cy-60)
 --    sceneGroup:insert(playButton1)
 end
 if upl3 == 2 then
-  local playButton3_3 = widget.newButton{
+  playButton3_3 = widget.newButton{
     id = "upgrade3_3",
     x=cx-100,
     y=cy+140,
@@ -237,11 +237,11 @@ if upl3 == 2 then
   }
   sceneGroup:insert(playButton3_3)
  elseif upl3 < 2 or upl3 > 2 then 
-  local playButton3_3 = display.newImage("ButtonPressedLock.png",cx-100,cy+140)
+  playButton3_3 = display.newImage("ButtonPressedLock.png",cx-100,cy+140)
 --    sceneGroup:insert(playButton1)
 end
 if upl3 == 3 then
-  local playButton3_4 = widget.newButton{
+  playButton3_4 = widget.newButton{
     id = "upgrade3_4",
     x=cx-100,
     y=cy+340,
@@ -251,14 +251,14 @@ if upl3 == 3 then
   }
   sceneGroup:insert(playButton3_4)
 elseif upl3 < 3 or upl3 > 3 then 
-  local playButton3_4 = display.newImage("ButtonPressedLock.png",cx-100,cy+340)
+  playButton3_4 = display.newImage("ButtonPressedLock.png",cx-100,cy+340)
 --    sceneGroup:insert(playButton1)
  end  
   ----
   
   ---- Charge Time
   if upl4 == 0 then
-  local playButton4 = widget.newButton{
+  playButton4 = widget.newButton{
     id = "upgrade4",
     x=cx+200,
     y=cy-250,
@@ -269,12 +269,12 @@ elseif upl3 < 3 or upl3 > 3 then
   sceneGroup:insert(playButton4)
   playButton4.text = display.newText("Charge Time",playButton4.x,playButton4.y-120, native.systemFontBold, 40)
 elseif upl4 > 0 then 
-  local playButton4 = display.newImage("ButtonPressedLock.png",cx+200,cy-250)
+  playButton4 = display.newImage("ButtonPressedLock.png",cx+200,cy-250)
   playButton4.text = display.newText("Charge Time",playButton4.x,playButton4.y-120, native.systemFontBold, 40)
 --    sceneGroup:insert(playButton1)
 end
 if upl4 == 1 then
-  local playButton4_2 = widget.newButton{
+  playButton4_2 = widget.newButton{
     id = "upgrade4_2",
     x=cx+200,
     y=cy-60,
@@ -284,11 +284,11 @@ if upl4 == 1 then
   }
   sceneGroup:insert(playButton4_2)
 elseif upl4 < 1 or upl4 > 1 then 
-  local playButton4_2 = display.newImage("ButtonPressedLock.png",cx+200,cy-60)
+  playButton4_2 = display.newImage("ButtonPressedLock.png",cx+200,cy-60)
 --    sceneGroup:insert(playButton1)
 end
 if upl4 == 2 then
-  local playButton4_3 = widget.newButton{
+  playButton4_3 = widget.newButton{
     id = "upgrade4_3",
     x=cx+200,
     y=cy+140,
@@ -298,11 +298,11 @@ if upl4 == 2 then
   }
   sceneGroup:insert(playButton4_3)
 elseif upl4 < 2 or upl4 > 2 then 
-  local playButton4_3 = display.newImage("ButtonPressedLock.png",cx+200,cy+140)
+  playButton4_3 = display.newImage("ButtonPressedLock.png",cx+200,cy+140)
 --    sceneGroup:insert(playButton1)
 end
 if upl4 == 3 then
-  local playButton4_4 = widget.newButton{
+  playButton4_4 = widget.newButton{
     id = "upgrade4_4",
     x=cx+200,
     y=cy+340,
@@ -312,14 +312,14 @@ if upl4 == 3 then
   }
   sceneGroup:insert(playButton4_4)
 elseif upl4 < 3 or upl4 > 3 then 
-  local playButton4_4 = display.newImage("ButtonPressedLock.png",cx+200,cy+340)
+  playButton4_4 = display.newImage("ButtonPressedLock.png",cx+200,cy+340)
 --    sceneGroup:insert(playButton1)
  end
 ----
 
 ---- Ultimate Spell
 if upl5 == 1 then
-  local playButton5 = widget.newButton{
+  playButton5 = widget.newButton{
     id = "upgrade5",
     x=cx+600,
     y=cy,
@@ -332,14 +332,14 @@ if upl5 == 1 then
   sceneGroup:insert(playButton5)
   playButton5.text = display.newText("Ultimate Wizard\n       Upgrade",playButton5.x,playButton5.y-250, native.systemFontBold, 60)
 elseif upl5 == 0  then 
-  local playButton5 = display.newImage("ButtonPressedLock.png",cx+600,cy)
+  playButton5 = display.newImage("ButtonPressedLock.png",cx+600,cy)
   playButton5.width = 300
   playButton5.height = 300
   playButton5.text = display.newText("Ultimate Wizard\n       Upgrade",playButton5.x,playButton5.y-250, native.systemFontBold, 60)
 --    sceneGroup:insert(playButton1)
  end
 ---Resume Play Button
-  local resume = widget.newButton{
+  resume = widget.newButton{
     id = "resume",
     x=cx+600,
     y=cy+300,
