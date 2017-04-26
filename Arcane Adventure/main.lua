@@ -6,6 +6,7 @@ armor=0; -- player armor
 staff = 0; -- player damageamp
 skill=0; -- player spell cast speed
 wizBan = 0;
+bank=0;
 
 upl1 = 0
 upl2 = 0

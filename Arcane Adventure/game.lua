@@ -84,6 +84,7 @@ local function onCollision(event)
 
     if event.other.hp <= 0 then
       if event.other.name=="wiz" then
+        fireballLock=true
         gTxt.text="Wiz has Died :(!\n All Hope Is Lost!"
       end
       event.other.enterFrame = scrollEnemies
@@ -91,6 +92,7 @@ local function onCollision(event)
       --physics.removeBody(event.other)
       event.other:removeSelf()
       wizCount();
+      bank=bank+level;
       b=b-1;
     end
 
@@ -160,7 +162,7 @@ end
 local function game (event)
   i = i+1
 
-  if i>(15-skill) then
+  if i>(25-skill) then
     if fireballLock then
       fireballLock=false
     end

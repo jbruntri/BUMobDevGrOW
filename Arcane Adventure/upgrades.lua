@@ -10,24 +10,35 @@ local function gotoGame()
   composer.gotoScene("game", { time = 800, effect="fade"})
 end
 
+local bought = false
+
 local function ButtonHandler(event)
   if event.phase == "ended" then
     if event.target.id == "weapon1" then
-      upl1 = upl1+1
-      staff = 5
-      gotoGame()
+      if(bank>5 and not bought) then
+        upl1 = upl1+1
+        staff = 5
+        bank=bank-10
+        bought=true
+      end
     elseif event.target.id == "weapon2" then
-      upl1 = upl1+1
-      staff = 10
-      --gotoGame()
+      if(bank>50) then
+        upl1 = upl1+1
+        staff = 10
+        bank=bank-50
+      end
     elseif event.target.id == "weapon3" then
-      upl1 = upl1+1
-      staff = 20
-    --gotoGame()
+      if (bank>200) then
+        upl1 = upl1+1
+        staff = 20
+        bank=bank<100
+      end
     elseif event.target.id == "weapon4" then
-      upl1 = upl1+1
-      --gotoGame()
-      staff = 40
+      if(bank>500) then
+        upl1 = upl1+1
+        staff = 40
+        bank=bank-500
+      end
    elseif event.target.id == "resume" then
       gotoGame()
     end
@@ -251,7 +262,7 @@ elseif upl3 < 3 or upl3 > 3 then
  end
   ----
 
-
+  print(bank)
 ---Resume Play Button
   resume = widget.newButton{
     id = "resume",
