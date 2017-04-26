@@ -15,7 +15,7 @@ local function ButtonHandler(event)
     if event.target.id == "weapon1" then
       upl1 = upl1+1
       staff = 5
-      --gotoGame()
+      gotoGame()
     elseif event.target.id == "weapon2" then
       upl1 = upl1+1
       staff = 10
@@ -30,7 +30,7 @@ local function ButtonHandler(event)
       staff = 40
    elseif event.target.id == "resume" then
       gotoGame()
- end
+    end
 
 
   end
@@ -72,7 +72,7 @@ function scene:show( event )
   sceneGroup:insert(title)
 if upl1 == 0 then
   playButton1 = widget.newButton{
-    id = "weapon",
+    id = "weapon1",
     x=cx-700,
     y=cy-250,
     defaultFile = "Button.png",
@@ -310,8 +310,7 @@ function scene:hide( event )
     playButton1.text:removeSelf()
     playButton2.text:removeSelf()
     playButton3.text:removeSelf()
-    playButton4.text:removeSelf()
-    playButton5.text:removeSelf()
+
 
 --    resback:removeSelf()
 --    resumeshad:removeSelf()

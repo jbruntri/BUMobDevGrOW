@@ -26,7 +26,6 @@ local char2 = {}
 local a=0
 local b=0
 local i=0
-local wizBan=0
 local fireball={}
 local n = 0
 local fireballLock = false
@@ -77,7 +76,7 @@ local function onCollision(event)
       event.other:setFillColor(0.8,0,0)
       event.other.hp = event.other.hp - char1.damage
     end
-    
+
     if event.target.name=="wiz" then
       event.target.hp=event.target.hp - 5
         event.other.hp = event.other.hp - 15
@@ -109,7 +108,7 @@ local function enemySpawn()
     char2[a]:scale(0.4,0.4)
     char2[a].x = cw+50
     char2[a].y = cy+cy*0.42
-    char2[a].speed = 5 + floor(level/2)
+    char2[a].speed = 5 + math.floor(level/2)
     char2[a].hp = 8 + level
     char2[a].enterFrame = scrollEnemies
     Runtime:addEventListener("enterFrame", char2[a])
@@ -166,20 +165,18 @@ local function game (event)
       fireballLock=false
     end
 
-  if( level<20 ) then
-
   if i>15 then
-    i=0
-    spawn = math.random(0,100)
-    if spawn>70-floor(level/2) then
-      enemySpawn()
+      i=0
+      spawn = math.random(0,100)
+      if spawn>70-math.floor(level/2) then
+        enemySpawn()
+      end
+    end
+    if wizBan > 7*level+math.floor(level/3) then
+      level=level+1;
+      composer.gotoScene("upgrades")
     end
   end
-  if wizBan > 7*level+floor(level/3) then
-    level=level+1;
-    composer.gotoScene("upgrades")
-  end
-
 end
 
 music = audio.loadStream("music/airship.mp3")
@@ -332,12 +329,6 @@ function scene:hide( event )
     end
       Runtime:removeEventListener("enterFrame", scrollEnemies)
       Runtime:removeEventListener("enterFrame", game)
-        for i = c,n-1 do
---      Runtime:removeEventListener("enterFrame", fireball[i])
-
---        fireball[i].isVisible = false
-
-    end
     for i = wizBan+1,a do
 --      char2[i].enterFrame = scrollEnemies
       Runtime:removeEventListener("enterFrame", char2[i])
@@ -345,11 +336,12 @@ function scene:hide( event )
     end
 
 
-    char1:removeSelf()
+    if char1~=nil then char1:removeSelf() end
+
     button1:setEnabled(false)
     button1:removeSelf()
     wizBanTxt:removeSelf()
-    audio.stop(fbSound)
+    --audio.stop(fbSound)
     audio.stop( 1 )
     audio.dispose( menuTrack )
   elseif ( phase == "did" ) then
