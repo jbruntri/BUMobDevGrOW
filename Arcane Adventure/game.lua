@@ -2,7 +2,7 @@ local cx,cy = display.contentCenterX,display.contentCenterY
 local ch,cw = display.contentHeight, display.contentWidth
 local widget = require "widget"
 -- requires
-
+require "animations"
 local composer = require "composer"
 local scene = composer.newScene()
 
@@ -30,6 +30,7 @@ local wizBan=0
 local fireball={}
 local c = 0
 local n = 0
+local fireballLock = false
 local function wizCount()
   wizBan=wizBan+1;
   wizBanTxt.text="Wizards Banished: "..wizBan
@@ -137,30 +138,36 @@ end
 
 function buttonHandler(event)
     if event.phase == "began" then
-      audio.play(fbSound)
-      fireball[n] = display.newImage("fball.png",char1.x+70,char1.y)
-      fireball[n]:scale(3,3)
-      fireball[n].speed = 20
-      fireball[n].hp = 5
-      fireball[n].name = "fb"
-      fireball[n].enterFrame = projectile
-      Runtime:addEventListener("enterFrame",fireball[n])
---      fireball[n].alpha = 0
-      physics.addBody(fireball[n], {radius = 20})
-      fireball[n].gravityScale = 0
-      fireball[n].filter=spellCollision
-      fireball[n]:addEventListener("collision", onCollision)
---      fireball[n]:addEventListener("postCollision", onPostCollision)
-      n=n+1
-      
+      if fireballLock == false then
+        audio.play(fbSound)
+        fireball[n] = display.newImage("fball.png",char1.x+70,char1.y)
+        fireball[n]:scale(3,3)
+        fireball[n].speed = 20
+        fireball[n].hp = 5
+        fireball[n].name = "fb"
+        fireball[n].enterFrame = projectile
+        Runtime:addEventListener("enterFrame",fireball[n])
+--        fireball[n].alpha = 0
+        physics.addBody(fireball[n], {radius = 20})
+        fireball[n].gravityScale = 0
+        fireball[n].filter=spellCollision
+        fireball[n]:addEventListener("collision", onCollision)
+--        fireball[n]:addEventListener("postCollision", onPostCollision)
+        n=n+1
+        fireballLock = true
+      end
     end
 end
 
 local function game (event)
   i = i+1
   if i>15 then
+    
     i=0
     spawn = math.random(0,100)
+    if fireballLock then
+      fireballLock = false
+    end
     if spawn>70 then
       enemySpawn()
     end
@@ -182,7 +189,7 @@ function scene:create( event )
   background = display.newImage("plx-1.png",cx,cy)
   background.width = 1920
   background.height = 1080
-  
+--  sceneGroup:insert(background)               ------------
   for i = 0,1 do
     jung1[i]= display.newImage("plx-2.png")
     jung1[i].anchorX = 0
@@ -193,6 +200,7 @@ function scene:create( event )
     jung1[i].y = 1080
     jung1[i].speed = 1
     jung1[i].enterFrame = scrollJung
+--    sceneGroup:insert(jung1[i])                  ----------------
     Runtime:addEventListener("enterFrame", jung1[i])
   end
   for i = 0,1 do
@@ -205,6 +213,7 @@ function scene:create( event )
     jung2[i].y = 1080
     jung2[i].speed = 2
     jung2[i].enterFrame = scrollJung
+--    sceneGroup:insert(jung2[i])                  ----------------
     Runtime:addEventListener("enterFrame", jung2[i])
   end
   for i = 0,1 do
@@ -217,6 +226,7 @@ function scene:create( event )
     jung3[i].y = 1080
     jung3[i].speed = 3
     jung3[i].enterFrame = scrollJung
+--    sceneGroup:insert(jung3[i])                  ----------------
     Runtime:addEventListener("enterFrame", jung3[i])
   end
   for i = 0,1 do
@@ -229,6 +239,7 @@ function scene:create( event )
     jung4[i].y = 1080
     jung4[i].speed = 5
     jung4[i].enterFrame = scrollJung
+--    sceneGroup:insert(jung4[i])                  ----------------
     Runtime:addEventListener("enterFrame", jung4[i])
   end
 
@@ -242,6 +253,7 @@ function scene:create( event )
     ground[i].y = 1150
     ground[i].speed = 5
     ground[i].enterFrame = scrollGround
+--    sceneGroup:insert(ground[i])                  ----------------
     Runtime:addEventListener("enterFrame", ground[i])
   end
 --- ADDED PLAYER ---
@@ -250,6 +262,18 @@ function scene:create( event )
   wizBanTxt=display.newText("", cx, 50)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
   gTxt:setFillColor(1)  
+  button1 = widget.newButton{
+      id = "spell1",
+      label = "A",
+      x = 0.90*display.contentWidth,
+      y = 0.90*display.contentHeight,
+      defaultFile = "leather button.png",
+      overFile = "leather button pressed.png",
+      onPress = buttonHandler
+  }
+  button1:scale(1.5,1.5)
+--  sceneGroup:insert(button1) ----------------
+  button1:toFront()
 end
 
 
@@ -261,18 +285,19 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-    button1 = widget.newButton{
-      id = "spell1",
-      label = "Spell 1",
-      shape = "circle",
-      radius = 100,
-      x = 0.90*display.contentWidth,
-      y = 0.90*display.contentHeight,
-      fillColor = { default={1,0,0,.7},
-      over={1,0,0,0.2} },
-      onPress = buttonHandler
-    }
+
+--    sceneGroup:insert(button1)
     Runtime:addEventListener("enterFrame", game)
+--    openWiz = display.newSprite(sheetWiz2, sequence_Wiz2)
+--    openWiz.x = cx
+--    openWiz.y = cy
+--    openWiz:scale(7,7)
+----    openWiz:play()
+--    openWiz2 = display.newSprite(sheetWiz3, sequence_Wiz3)
+--    openWiz2.x = cx
+--    openWiz2.y = cy-48
+--    openWiz2:scale(7,7)
+--    openWiz2:play()
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
   audio.play( music, {channel=1, loops = -1})
@@ -306,8 +331,10 @@ function scene:hide( event )
       Runtime:removeEventListener("enterFrame", scrollEnemies)
       Runtime:removeEventListener("enterFrame", game)
         for i = c,n-1 do
-      Runtime:removeEventListener("enterFrame", fireball[i])
-      fireball[i]:removeSelf()
+--      Runtime:removeEventListener("enterFrame", fireball[i])
+      
+--        fireball[i].isVisible = false
+
     end
     for i = wizBan+1,a do
 --      char2[i].enterFrame = scrollEnemies
