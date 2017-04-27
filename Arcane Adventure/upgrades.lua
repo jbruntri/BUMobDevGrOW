@@ -10,35 +10,97 @@ local function gotoGame()
   composer.gotoScene("game", { time = 800, effect="fade"})
 end
 
-local bought = false
+
 
 local function ButtonHandler(event)
   if event.phase == "ended" then
     if event.target.id == "weapon1" then
-      if(bank>5 and not bought) then
+      if(bank>5 and Wlevel<1) then
         upl1 = upl1+1
         staff = 5
         bank=bank-10
-        bought=true
+        Wlevel=Wlevel+1;
       end
     elseif event.target.id == "weapon2" then
-      if(bank>50) then
+      if(bank>50 and Wlevel<2) then
         upl1 = upl1+1
         staff = 10
         bank=bank-50
+        Wlevel=Wlevel+2;
       end
     elseif event.target.id == "weapon3" then
-      if (bank>200) then
+      if (bank>200 and Wlevel<5) then
         upl1 = upl1+1
         staff = 20
         bank=bank<100
+        Wlevel=Wlevel+5
       end
     elseif event.target.id == "weapon4" then
-      if(bank>500) then
+      if(bank>500 and Wlevel<10) then
         upl1 = upl1+1
         staff = 40
         bank=bank-500
+        Wlevel=Wlevel+10;
       end
+      -- Armor Upgrades --
+    elseif event.target.id == "robe" then
+        if(bank>5 and Alevel<1) then
+          upl2 = upl2+1
+          armor = 5
+          bank=bank-10
+          Alevel=Alevel+1;
+        end
+      elseif event.target.id == "robe2" then
+        if(bank>50 and Alevel<2) then
+          upl2 = upl2+1
+          armor = 10
+          bank=bank-50
+          Alevel=Alevel+2;
+        end
+      elseif event.target.id == "robe3" then
+        if (bank>200 and Alevel<5) then
+          upl2 = upl2+1
+          armor = 20
+          bank=bank<100
+          Alevel=Alevel+5
+        end
+      elseif event.target.id == "robe4" then
+        if(bank>500 and Alevel<10) then
+          upl2 = upl2+1
+          armor = 40
+          bank=bank-500
+          Alevel=Alevel+10;
+        end
+        -- Upgrade Skill --
+      elseif event.target.id == "skill" then
+          if(bank>5 and Slevel<1) then
+            upl3= upl3+1
+            skill = 5
+            bank=bank-10
+            Slevel=Slevel+1;
+          end
+        elseif event.target.id == "skill2" then
+          if(bank>50 and Slevel<2) then
+            upl3 = upl3+1
+            skill = 10
+            bank=bank-50
+            Slevel=Slevel+2;
+          end
+        elseif event.target.id == "skill3" then
+          if (bank>200 and Slevel<5) then
+            upl3 = upl3+1
+            skill = 20
+            bank=bank<100
+            Slevel=Slevel+5
+          end
+        elseif event.target.id == "skill4" then
+          if(bank>500 and Slevel<10) then
+            upl3 = upl3+1
+            skill = 40
+            bank=bank-500
+            Slevel=Slevel+10;
+          end
+
    elseif event.target.id == "resume" then
       gotoGame()
     end
