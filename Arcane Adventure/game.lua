@@ -15,6 +15,7 @@ local darkWizardCollisions = {categoryBits=2, maskBits=5}
 local wizCollisions = {categoryBits=4, maskBits=2}
 
 local fbSound= audio.loadSound("fire.wav")
+local coinSound = audio.loadSound("coinSound.wav")
 local gameTrack
 local jung1 = {}
 local jung2 = {}
@@ -23,6 +24,7 @@ local jung4 = {}
 local ground = {}
 local char1
 local char2 = {}
+local xCount = 0
 local a=0
 local b=0
 local i=0
@@ -92,7 +94,11 @@ local function onCollision(event)
       --physics.removeBody(event.other)
       event.other:removeSelf()
       wizCount();
+      transition.to(coin, {delay = 0, time = 0, alpha = 0})
       bank=bank+level;
+      coinCounter(xCount)
+      coinCounterTxt.text = "Coins: "..bank
+      print(bank)
       b=b-1;
     end
 
@@ -106,7 +112,7 @@ local function enemySpawn()
     b=b+1;
     a=a+1
 
-    char2[a]=display.newImage("Wiz/Wizard2.png")
+    char2[a]=display.newImage("Wizard2.png")
     char2[a]:scale(0.4,0.4)
     char2[a].x = cw+50
     char2[a].y = cy+cy*0.42
@@ -119,10 +125,11 @@ local function enemySpawn()
     char2[a].gravityScale=0
     char2[a]:addEventListener("collision", onCollision)
     gTxt.text="";
+    xCount = xCount+1
   end
 end
 local function genChar()
-  char1=display.newImage("Wiz/Wizard.png")
+  char1=display.newImage("Wizard.png")
   char1:scale(0.4,0.4)
   char1.name="wiz"
   char1.x = cx - 0.4*cw
@@ -261,6 +268,7 @@ function scene:create( event )
   genChar();
 
   wizBanTxt=display.newText("", cx, 50)
+  coinCounterTxt = display.newText("", cx, 100)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
   gTxt:setFillColor(1)
   button1 = widget.newButton{
@@ -277,6 +285,23 @@ function scene:create( event )
   button1:toFront()
 end
 
+function coinCounter(val)
+--  coin = display.newImage("coin.jpg")
+--      coin.x = char2[val].x
+--      coin.y = char2[val].y
+--      coin.width = 30
+--      coin.height = 30
+--  transition.to(coin, {delay = 0, time = 0, alpha = 0})
+--  transition.to(coin, {delay = 10, time = 100, char2[val].x, char2[val].y, alpha = 1})
+  audio.play(coinSound)
+  print("coin Sound")
+end
+
+local function endGame()
+  composer.setVariable("finalScore", wizBan)
+  composer.removeScene("highScores")
+  composer.gotoScene("highScores")
+end
 
 
 function scene:show( event )
@@ -343,6 +368,7 @@ function scene:hide( event )
     button1:setEnabled(false)
     button1:removeSelf()
     wizBanTxt:removeSelf()
+    coinCounterTxt:removeSelf()
     --audio.stop(fbSound)
     audio.stop( 1 )
     audio.dispose( menuTrack )
