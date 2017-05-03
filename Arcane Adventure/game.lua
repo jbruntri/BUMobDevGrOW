@@ -15,6 +15,7 @@ local darkWizardCollisions = {categoryBits=2, maskBits=5}
 local wizCollisions = {categoryBits=4, maskBits=2}
 
 local fbSound= audio.loadSound("fire.wav")
+local coinSound = audio.loadSound("coinSound.wav")
 local gameTrack
 local jung1 = {}
 local jung2 = {}
@@ -22,18 +23,16 @@ local jung3 = {}
 local jung4 = {}
 local ground = {}
 local char1
-local currEnemCoun = 0
 local char2 = {}
+local xCount = 0
 local a=0
 local b=0
 local i=0
 local fireball={}
-local ftime = 0
 local n = 0
 local fireballLock = false
 local function wizCount()
   wizBan=wizBan+1;
-  currEnemCoun = currEnemCoun + 1
   wizBanTxt.text="Wizards Banished: "..wizBan
 end
 
@@ -95,7 +94,11 @@ local function onCollision(event)
       --physics.removeBody(event.other)
       event.other:removeSelf()
       wizCount();
+      transition.to(coin, {delay = 0, time = 0, alpha = 0})
       bank=bank+level;
+      coinCounter(xCount)
+      coinCounterTxt.text = "Coins: "..bank
+      print(bank)
       b=b-1;
     end
 
@@ -105,11 +108,11 @@ end
 -- background
 
 local function enemySpawn()
-  if b<10 then
+  if b<20 then
     b=b+1;
     a=a+1
---    print("b: "..b.."    a: "..a)
-    char2[a]=display.newImage("Wiz/Wizard2.png")
+
+    char2[a]=display.newImage("Wizard2.png")
     char2[a]:scale(0.4,0.4)
     char2[a].x = cw+50
     char2[a].y = cy+cy*0.42
@@ -122,11 +125,11 @@ local function enemySpawn()
     char2[a].gravityScale=0
     char2[a]:addEventListener("collision", onCollision)
     gTxt.text="";
-    button1:toFront()
+    xCount = xCount+1
   end
 end
 local function genChar()
-  char1=display.newImage("Wiz/Wizard.png")
+  char1=display.newImage("Wizard.png")
   char1:scale(0.4,0.4)
   char1.name="wiz"
   char1.x = cx - 0.4*cw
@@ -159,34 +162,29 @@ function buttonHandler(event)
 --        fireball[n]:addEventListener("postCollision", onPostCollision)
         n=n+1
         fireballLock = true
-        ftime = 1
       end
     end
 end
 
 local function game (event)
   i = i+1
-  if ftime >= 1 then
-    ftime = ftime + 1
-  end
-  
-  if ftime>(26-skill) then
+
+  if i>(25-skill) then
     if fireballLock then
-      ftime = 0
       fireballLock=false
     end
-  end
+
   if i>15 then
-    i=0
-    spawn = math.random(0,100)
---    print(spawn)
+      i=0
+      spawn = math.random(0,100)
       if spawn>70-math.floor(level/2) then
         enemySpawn()
       end
-  end
-  if wizBan > 7*level+math.floor(level/3) then
+    end
+    if wizBan > 7*level+math.floor(level/3) then
       level=level+1;
       composer.gotoScene("upgrades")
+    end
   end
 end
 
@@ -270,6 +268,7 @@ function scene:create( event )
   genChar();
 
   wizBanTxt=display.newText("", cx, 50)
+  coinCounterTxt = display.newText("", cx, 100)
   gTxt=display.newText("",cx,cy, system.nativeFont, 100)
   gTxt:setFillColor(1)
   button1 = widget.newButton{
@@ -284,9 +283,25 @@ function scene:create( event )
   button1:scale(1.5,1.5)
 --  sceneGroup:insert(button1) ----------------
   button1:toFront()
-  button1.alpha = 0.75
 end
 
+function coinCounter(val)
+--  coin = display.newImage("coin.jpg")
+--      coin.x = char2[val].x
+--      coin.y = char2[val].y
+--      coin.width = 30
+--      coin.height = 30
+--  transition.to(coin, {delay = 0, time = 0, alpha = 0})
+--  transition.to(coin, {delay = 10, time = 100, char2[val].x, char2[val].y, alpha = 1})
+  audio.play(coinSound)
+  print("coin Sound")
+end
+
+local function endGame()
+  composer.setVariable("finalScore", wizBan)
+  composer.removeScene("highScores")
+  composer.gotoScene("highScores")
+end
 
 
 function scene:show( event )
@@ -341,16 +356,10 @@ function scene:hide( event )
     end
       Runtime:removeEventListener("enterFrame", scrollEnemies)
       Runtime:removeEventListener("enterFrame", game)
-    local t = 0
-    for i = currEnemCoun+1,a do
-      t = t+1
-      print("t: " ..t)
---    for i = a-b,a do
+    for i = wizBan+1,a do
 --      char2[i].enterFrame = scrollEnemies
       Runtime:removeEventListener("enterFrame", char2[i])
-      if char2[i] ~= nil then
       char2[i]:removeSelf()
-      end
     end
 
 
@@ -359,6 +368,7 @@ function scene:hide( event )
     button1:setEnabled(false)
     button1:removeSelf()
     wizBanTxt:removeSelf()
+    coinCounterTxt:removeSelf()
     --audio.stop(fbSound)
     audio.stop( 1 )
     audio.dispose( menuTrack )
@@ -373,11 +383,7 @@ function scene:destroy( event )
 
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-  for i = wizBan+1,a do
---      char2[i].enterFrame = scrollEnemies
---      Runtime:removeEventListener("enterFrame", char2[i])
---      char2[i]:removeSelf()
-    end
+
 end
 
 

@@ -6,12 +6,7 @@ armor=0; -- player armor
 staff = 0; -- player damageamp
 skill=0; -- player spell cast speed
 wizBan = 0;
---a = 0
 bank=0;
--- Weapon, Armor and Skill level tracking variables --
-Alevel = 0;
-Wlevel=0;
-Slevel=0;
 
 upl1 = 0
 upl2 = 0

@@ -18,10 +18,17 @@ local function gotoGame()
   openChest:play()
 end
 
-local function gotoTutorial()
-  composer.removeScene("tutorial")
-  composer.gotoScene( "tutorial" ,{time=800, effect="crossFade"})
+local function gotoHighScores()
+  composer.removeScene("highScores")
+  composer.gotoScene("highScores",{time= 800, effect = "crossFade"})
 end
+
+
+
+--local function gotoTutorial()
+--  composer.removeScene("tutorial")
+--  composer.gotoScene( "tutorial" ,{time=800, effect="crossFade"})
+--end
 
 local menuTrack
 
@@ -65,11 +72,12 @@ function scene:create( event )
   local playShadow = display.newText(sceneGroup,"Play!", cx+5,cy+5, "Harry P", 150)
   playShadow:setFillColor(0)
   local playButton = display.newText(sceneGroup,"Play!", cx,cy, "Harry P", 150)
-
---  local tutorialButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44 )
+  local highScoreButton = display.newText(sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44)
+  --local tutorialButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44 )
 
     playButton:addEventListener( "tap", gotoGame)
---    tutorialButton:addEventListener("tap", gotoTutorial)
+    highScoreButton:addEventListener("tap", gotoHighScores)
+    --tutorialButton:addEventListener("tap", gotoTutorial)
     menuTrack = audio.loadStream("music/castle2.mp3")
 end
 
