@@ -18,17 +18,10 @@ local function gotoGame()
   openChest:play()
 end
 
-local function gotoHighScores()
-  composer.removeScene("highScores")
-  composer.gotoScene("highScores",{time= 800, effect = "crossFade"})
+local function gotoTutorial()
+  composer.removeScene("tutorial")
+  composer.gotoScene( "tutorial" ,{time=700, effect="crossFade"})
 end
-
-
-
---local function gotoTutorial()
---  composer.removeScene("tutorial")
---  composer.gotoScene( "tutorial" ,{time=800, effect="crossFade"})
---end
 
 local menuTrack
 
@@ -44,16 +37,16 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
-  local chestOptions = {width = 308,height = 400,numFrames = 6}
-  local sheetChest = graphics.newImageSheet("Chest.png", chestOptions)
-  local sequence_Chest = {{name = "norm",start = 1,count = 6,time = 1000,loopCount = 1,loopDirection = "forward"}}
-  local background1 = display.newImage(sceneGroup, "menuBack.png",cx,cy)
+  chestOptions = {width = 308,height = 400,numFrames = 6}
+  sheetChest = graphics.newImageSheet("Chest.png", chestOptions)
+  sequence_Chest = {{name = "norm",start = 1,count = 6,time = 1000,loopCount = 1,loopDirection = "forward"}}
+  background1 = display.newImage(sceneGroup, "menuBack.png",cx,cy)
   background1.width = 1920
   background1.height = 1080
   background1.speed = 3
   background1.enterFrame = scrollBack
   Runtime:addEventListener("enterFrame",background1)
-  local background2 = display.newImage(sceneGroup, "menuBack.png",cx+cw,cy)
+  background2 = display.newImage(sceneGroup, "menuBack.png",cx+cw,cy)
   background2.width = 1920
   background2.height = 1080
   background2.speed = 3
@@ -65,20 +58,25 @@ function scene:create( event )
   openChest:scale(3.5,3.5)
   openChest:addEventListener("sprite",spriteListener)
   sceneGroup:insert(openChest)
-  local titleShadow = display.newText(sceneGroup, "Arcane Adventure", cx+5, 0.25*cy+5,"Harry P", 200)
+  titleShadow = display.newText(sceneGroup, "Arcane Adventure", cx+5, 0.25*cy+5,"HARRYP_.TTF", 200)
   titleShadow:setFillColor(0)
-  local title = display.newText(sceneGroup, "Arcane Adventure", cx, 0.25*cy,"Harry P", 200)
+  title = display.newText(sceneGroup, "Arcane Adventure", cx, 0.25*cy,"HARRYP_.TTF", 200)
   title:setFillColor(0.75,0,0.9)
-  local playShadow = display.newText(sceneGroup,"Play!", cx+5,cy+5, "Harry P", 150)
+  playShadow = display.newText(sceneGroup,"Play", cx+5,cy+5, "HARRYP_.TTF", 200)
   playShadow:setFillColor(0)
-  local playButton = display.newText(sceneGroup,"Play!", cx,cy, "Harry P", 150)
-  local highScoreButton = display.newText(sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44)
-  --local tutorialButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44 )
+  playButton = display.newText(sceneGroup,"Play", cx,cy, "HARRYP_.TTF", 200)
+  tutorialShadow = display.newText(sceneGroup,"Tutorial", cx+5,cy+255, "HARRYP_.TTF", 100)
+  tutorialShadow:setFillColor(0)
+  tutorialButton = display.newText(sceneGroup,"Tutorial", cx,cy+250, "HARRYP_.TTF", 100)
+  highShadow = display.newText(sceneGroup,"High Scores", cx+5,cy+405, "HARRYP_.TTF", 100)
+  highShadow:setFillColor(0)
+  highButton = display.newText(sceneGroup,"High Scores", cx,cy+400, "HARRYP_.TTF", 100)
 
-    playButton:addEventListener( "tap", gotoGame)
-    highScoreButton:addEventListener("tap", gotoHighScores)
-    --tutorialButton:addEventListener("tap", gotoTutorial)
-    menuTrack = audio.loadStream("music/castle2.mp3")
+--  local tutorialButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, 810, native.systemFont, 44 )
+
+  playButton:addEventListener( "tap", gotoGame)
+  tutorialButton:addEventListener("tap", gotoTutorial)
+  menuTrack = audio.loadStream("music/castle2.mp3")
 end
 
 function scene:show( event )
@@ -103,6 +101,23 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
+    
+    Runtime:removeEventListener("enterFrame",background1)
+    Runtime:removeEventListener("enterFrame",background2)
+    openChest:removeEventListener("sprite",spriteListener)
+    playButton:removeEventListener("tap", gotoGame)
+    tutorialButton:removeEventListener("tap", gotoTutorial)
+    background1:removeSelf()
+    background2:removeSelf()
+    openChest:removeSelf()
+    title:removeSelf()
+    titleShadow:removeSelf()
+    playButton:removeSelf()
+    playShadow:removeSelf()
+    tutorialButton:removeSelf()
+    tutorialShadow:removeSelf()
+    highButton:removeSelf()
+    highShadow:removeSelf()
     audio.stop( 1 )
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen

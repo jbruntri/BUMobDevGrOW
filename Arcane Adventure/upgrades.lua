@@ -32,7 +32,7 @@ local function ButtonHandler(event)
       if (bank>200 and Wlevel<5) then
         upl1 = upl1+1
         staff = 20
-        bank=bank<100
+        bank=bank-200
         Wlevel=Wlevel+5
       end
     elseif event.target.id == "weapon4" then
@@ -61,7 +61,7 @@ local function ButtonHandler(event)
         if (bank>200 and Alevel<5) then
           upl2 = upl2+1
           armor = 20
-          bank=bank<100
+          bank=bank-200
           Alevel=Alevel+5
         end
       elseif event.target.id == "robe4" then
@@ -90,7 +90,7 @@ local function ButtonHandler(event)
           if (bank>200 and Slevel<5) then
             upl3 = upl3+1
             skill = 20
-            bank=bank<100
+            bank=bank-200
             Slevel=Slevel+5
           end
         elseif event.target.id == "skill4" then
@@ -139,128 +139,178 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-  local title_shadow = display.newText("Spell Book Upgrades", cx+5, 70, native.systemFontBold, 70)
+  local title_shadow = display.newText("Spell Book Upgrades", cx+5, 70, "HARRYP_.TTF", 100)
   title_shadow:setFillColor(0)
   sceneGroup:insert(title_shadow)
-  local title = display.newText("Spell Book Upgrades", cx, 65, native.systemFontBold, 70)
+  local title = display.newText("Spell Book Upgrades", cx, 65, "HARRYP_.TTF", 100)
   sceneGroup:insert(title)
 if upl1 == 0 then
   playButton1 = widget.newButton{
     id = "weapon1",
-    x=cx-700,
+    x=cx-550,
     y=cy-250,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/spell dam def 1.png",
+    overFile = "UpgradePics/spell dam pressed 1.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton1)
   playButton1.text = display.newText("Damage",playButton1.x,playButton1.y-120, native.systemFontBold, 40)
 elseif upl1 >= 1 then
-  playButton1 = display.newImage("ButtonPressedLock.png",cx-700,cy-250)
+  playButton1 = display.newImage("UpgradePics/spell dam bought 1.png",cx-550,cy-250)
+  playButton1.width = 170
+  playButton1.height = 170
   playButton1.text = display.newText("Damage",playButton1.x,playButton1.y-120, native.systemFontBold, 40)
 --    sceneGroup:insert(playButton1)
 end
  if upl1==1 then
   playButton1_2 = widget.newButton{
     id = "weapon2",
-    x=cx-700,
+    x=cx-550,
     y=cy-60,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/spell dam def 2.png",
+    overFile = "UpgradePics/spell dam pressed 2.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton1_2)
-elseif upl1 == 0 or upl1 >1 then
-  playButton1_2 = display.newImage("ButtonPressedLock.png",cx-700,cy-60)
---    sceneGroup:insert(playButton1)
+elseif upl1 == 0 then
+  playButton1_2 = display.newImage("UpgradePics/spell dam pressed 2.png",cx-550,cy-60)
+  playButton1_2.width = 170
+  playButton1_2.height = 170
+elseif upl1 > 1 then
+  playButton1_2 = display.newImage("UpgradePics/spell dam bought 2.png",cx-550,cy-60)
+  playButton1_2.width = 170
+  playButton1_2.height = 170
 end
 if upl1==2 then
  playButton1_3 = widget.newButton{
     id = "weapon3",
-    x=cx-700,
+    x=cx-550,
     y=cy+140,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/spell dam def 3.png",
+    overFile = "UpgradePics/spell dam pressed 3.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton1_3)
-  elseif upl1<2 or upl1>2 then
-  playButton1_3 = display.newImage("ButtonPressedLock.png",cx-700,cy+140)
---    sceneGroup:insert(playButton1)
+  elseif upl1<2 then
+    playButton1_3 = display.newImage("UpgradePics/spell dam pressed 3.png",cx-550,cy+140)
+    playButton1_3.width = 170
+    playButton1_3.height = 170
+  elseif upl1>2 then
+  playButton1_3 = display.newImage("UpgradePics/spell dam bought 3.png",cx-550,cy+140)
+  playButton1_3.width = 170
+  playButton1_3.height = 170
 end
 if upl1 ==3 then
   playButton1_4 = widget.newButton{
     id = "weapon4",
-    x=cx-700,
+    x=cx-550,
     y=cy+340,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/spell dam def 3.png",
+    overFile = "UpgradePics/spell dam pressed 3.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton1_4)
- elseif upl1 < 3 or upl1 > 3 then
-  playButton1_4 = display.newImage("ButtonPressedLock.png",cx-700,cy+340)
---    sceneGroup:insert(playButton1)
+ elseif upl1 < 3 then
+  playButton1_4 = display.newImage("UpgradePics/spell dam pressed 3.png",cx-550,cy+340)
+  playButton1_4.width = 170
+  playButton1_4.height = 170
+ elseif upl1 > 3 then
+  playButton1_4 = display.newImage("UpgradePics/spell dam bought 3.png",cx-550,cy+340)
+  playButton1_4.width = 170
+  playButton1_4.height = 170
  end
  ----
  ----armor/HP
  if upl2 == 0 then
   playButton2 = widget.newButton{
     id = "robe",
-    x=cx-400,
+    x=cx-250,
     y=cy-250,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,    
+    defaultFile = "UpgradePics/robe def 1.png",
+    overFile = "UpgradePics/robe pressed 1.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton2)
   playButton2.text = display.newText("Armor",playButton2.x,playButton2.y-120, native.systemFontBold, 40)
 elseif upl2 > 0 then
-  playButton2 = display.newImage("ButtonPressedLock.png",cx-400,cy-250)
+  playButton2 = display.newImage("UpgradePics/robe bought 1.png",cx-250,cy-250)
   playButton2.text = display.newText("Armor",playButton2.x,playButton2.y-120, native.systemFontBold, 40)
---    sceneGroup:insert(playButton1)
+  playButton2.width = 170
+  playButton2.height = 170
+
 end
 if upl2 == 1 then
   playButton2_2 = widget.newButton{
     id = "robe2",
-    x=cx-400,
+    x=cx-250,
     y=cy-60,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/robe def 2.png",
+    overFile = "UpgradePics/robe pressed 2.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton2_2)
-elseif upl2 == 0 or upl2 > 1 then
-  playButton2_2 = display.newImage("ButtonPressedLock.png",cx-400,cy-60)
---    sceneGroup:insert(playButton1)
+elseif upl2 == 0 then
+  playButton2_2 = display.newImage("UpgradePics/robe pressed 2.png",cx-250,cy-60)
+  playButton2_2.width = 170
+  playButton2_2.height = 170
+elseif upl2 > 1 then
+  playButton2_2 = display.newImage("UpgradePics/robe bought 2.png",cx-250,cy-60)
+  playButton2_2.width = 170
+  playButton2_2.height = 170
 end
 if upl2 == 2 then
   playButton2_3 = widget.newButton{
     id = "robe3",
-    x=cx-400,
+    x=cx-250,
     y=cy+140,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/robe def 3.png",
+    overFile = "UpgradePics/robe pressed 3.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton2_3)
-  elseif upl2 < 2 or upl2 > 2 then
-  playButton2_3 = display.newImage("ButtonPressedLock.png",cx-400,cy+140)
---    sceneGroup:insert(playButton1)
+  elseif upl2 < 2 then
+    playButton2_3 = display.newImage("UpgradePics/robe pressed 3.png",cx-250,cy+140)
+    playButton2_3.width = 170
+    playButton2_3.height = 170
+  elseif upl2 > 2 then
+    playButton2_3 = display.newImage("UpgradePics/robe bought 3.png",cx-250,cy+140)
+    playButton2_3.width = 170
+    playButton2_3.height = 170
  end
  if upl2 == 3 then
   playButton2_4 = widget.newButton{
     id = "robe4",
-    x=cx-400,
+    x=cx-250,
     y=cy+340,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/robe def 4.png",
+    overFile = "UpgradePics/robe pressed 4.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton2_4)
-  elseif upl2 < 3 or upl2 > 3 then
-  playButton2_4 = display.newImage("ButtonPressedLock.png",cx-400,cy+340)
---    sceneGroup:insert(playButton1)
+  elseif upl2 < 3 then
+  playButton2_4 = display.newImage("UpgradePics/robe pressed 4.png",cx-250,cy+340)
+  playButton2_4.width = 170
+  playButton2_4.height = 170
+  elseif upl2 > 3 then
+  playButton2_4 = display.newImage("UpgradePics/robe bought 4.png",cx-250,cy+340)
+  playButton2_4.width = 170
+  playButton2_4.height = 170
  end
   ----
 
@@ -268,60 +318,84 @@ if upl2 == 2 then
   if upl3 == 0 then
   playButton3 = widget.newButton{
     id = "skill",
-    x=cx-100,
+    x=cx+50,
     y=cy-250,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,    
+    defaultFile = "UpgradePics/staff def 1.png",
+    overFile = "UpgradePics/staff pressed 1.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton3)
-  playButton3.text = display.newText("Big Spell",playButton3.x,playButton3.y-120, native.systemFontBold, 40)
+  playButton3.text = display.newText("Speed",playButton3.x,playButton3.y-120, native.systemFontBold, 40)
 elseif upl3 > 0 then
-  playButton3 = display.newImage("ButtonPressedLock.png",cx-100,cy-250)
+  playButton3 = display.newImage("UpgradePics/staff bought 1.png",cx+50,cy-250)
   playButton3.text = display.newText("Big Spell",playButton3.x,playButton3.y-120, native.systemFontBold, 40)
---    sceneGroup:insert(playButton1)
+  playButton3.width = 170
+  playButton3.height = 170
 end
 if upl3 == 1 then
   playButton3_2 = widget.newButton{
     id = "skill2",
-    x=cx-100,
+    x=cx+50,
     y=cy-60,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/staff def 2.png",
+    overFile = "UpgradePics/staff pressed 2.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton3_2)
-elseif upl3 == 0 or upl3 > 1 then
-  playButton3_2 = display.newImage("ButtonPressedLock.png",cx-100,cy-60)
---    sceneGroup:insert(playButton1)
+elseif upl3 == 0 then
+  playButton3_2 = display.newImage("UpgradePics/staff pressed 1.png",cx+50,cy-60)
+  playButton3_2.width = 170
+  playButton3_2.height = 170
+elseif upl3 > 1 then
+  playButton3_2 = display.newImage("UpgradePics/staff bought 1.png",cx+50,cy-60)
+  playButton3_2.width = 170
+  playButton3_2.height = 170
 end
 if upl3 == 2 then
   playButton3_3 = widget.newButton{
     id = "skill3",
-    x=cx-100,
+    x=cx+50,
     y=cy+140,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/staff def 3.png",
+    overFile = "UpgradePics/staff pressed 3.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton3_3)
- elseif upl3 < 2 or upl3 > 2 then
-  playButton3_3 = display.newImage("ButtonPressedLock.png",cx-100,cy+140)
---    sceneGroup:insert(playButton1)
+ elseif upl3 < 2 then
+  playButton3_3 = display.newImage("UpgradePics/staff pressed 3.png",cx+50,cy+140)
+  playButton3_3.width = 170
+  playButton3_3.height = 170
+ elseif upl3 > 2 then
+  playButton3_3 = display.newImage("UpgradePics/staff bought 3.png",cx+50,cy+140)
+  playButton3_3.width = 170
+  playButton3_3.height = 170
 end
 if upl3 == 3 then
   playButton3_4 = widget.newButton{
     id = "skill4",
-    x=cx-100,
+    x=cx+50,
     y=cy+340,
-    defaultFile = "Button.png",
-    overFile = "ButtonPressed.png",
+    width = 170,
+    height = 170,
+    defaultFile = "UpgradePics/staff def 4.png",
+    overFile = "UpgradePics/staff pressed 4.png",
     onEvent = ButtonHandler
   }
   sceneGroup:insert(playButton3_4)
-elseif upl3 < 3 or upl3 > 3 then
-  playButton3_4 = display.newImage("ButtonPressedLock.png",cx-100,cy+340)
---    sceneGroup:insert(playButton1)
+elseif upl3 < 3 then
+  playButton3_4 = display.newImage("UpgradePics/staff pressed 4.png",cx+50,cy+340)
+  playButton3_4.width = 170
+  playButton3_4.height = 170
+elseif upl3 > 3 then
+  playButton3_4 = display.newImage("UpgradePics/staff bought 4.png",cx+50,cy+340)
+  playButton3_4.width = 170
+  playButton3_4.height = 170
  end
   ----
 
